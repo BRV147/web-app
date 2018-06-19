@@ -29,8 +29,8 @@ jobs:
 
       # specify any bash command here prefixed with `run: `
       - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
-      #- run: apt-get 
-
+      - run: apt-get install gcloud 
+      - run: pip install
       - run: gcloud --quiet components update
       - run: gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
       - run: gcloud config set project cp100-204508  
