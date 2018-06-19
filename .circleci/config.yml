@@ -23,11 +23,17 @@ jobs:
       
 
       # specify any bash command here prefixed with `run: `
+      - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
+      - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
+      - run: sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+      - run: sudo /opt/google-cloud-sdk/bin/gcloud config set project $GCLOUD_PROJECT
+      
+      
       - run: mkdir src
       - run: mkdir pkg
       - run: mkdir bin
       - run: go get cloud.google.com/go/pubsub
       - run: go get google.golang.org/appengine 
       - run: go build main.go
-      #- run: 
+      - run: gcloud -q app deploy app.yaml 
       #- run:  
