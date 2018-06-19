@@ -29,5 +29,5 @@ jobs:
       - run: go get cloud.google.com/go/pubsub
       - run: go get google.golang.org/appengine 
       - run: go build main.go
-      - run: go get -v -t -d ./...
-      - run: go test -v ./...
+      #- run: 
+      #- run:  
