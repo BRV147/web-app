@@ -5,9 +5,6 @@ version: 2
 jobs:
   build:
     docker:
-      - add_ssh_keys:
-          fingerprints:
-            - "b8:eb:0d:00:64:60:42:4d:10:3f:32:fe:85:83:f5:d3"
       # specify the version
       - image: circleci/golang:1.10.3
       
