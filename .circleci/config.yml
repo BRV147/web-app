@@ -2,44 +2,28 @@
 #
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2
-machine:
-  environment:
-    # Add app engine sdk to pythonpath for local unit tests.
-    PYTHONPATH: ${PYTHONPATH}:${HOME}/google_appengine
 
-    # Replace this with your project ID
-    GCLOUD_PROJECT: cp100-204508e
+jobs:
+  build:
+    machine:
+      environment:
+        # Add app engine sdk to pythonpath for local unit tests.
+        PYTHONPATH: ${PYTHONPATH}:${HOME}/google_appengine
 
-dependencies:
-  pre:
-    # Download App Engine SDK
-    # This is not necessary to deploy, its only necessary  to run local tests importing the App Engine SDK
-    - curl -o $HOME/google_appengine_1.9.30.zip https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.30.zip
-    - unzip -q -d $HOME $HOME/google_appengine_1.9.30.zip
-    # Retrieve our secrets from the CircleCI environment
-    - echo $CLIENT_SECRET | base64 --decode > ${HOME}/client-secret.json
-    - sed  s/YOUR-API-KEY/$API_KEY/ api_key.py.sample > api_key.py
-    # vendor our dependencies
-    - mkdir -p lib
-    - pip install -r requirements.txt -t lib
-    # Make sure gcloud is up to date
-    - gcloud --quiet components update app
-    # authenticate gcloud
-    - gcloud auth activate-service-account --key-file ${HOME}/client-secret.json
-    # Replace <your-project-id>
-- gcloud config set project $GCLOUD_PROJECT
-    working_directory: /go/src/github.com/BRV147/web-app
-    steps:
-      - checkout
+        # Replace this with your project ID
+        GCLOUD_PROJECT: cp100-204508
+        working_directory: /go/src/github.com/BRV147/web-app
+  steps:
+    - checkout
       
 
       # specify any bash command here prefixed with `run: `
       - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
       #- run:  
-     #- run: 
-     # - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
-     # - run: sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-     # - run: sudo /opt/google-cloud-sdk/bin/gcloud config set project cp100-204508  
+      - run: pip install 
+      - run: sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
+      - run: sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+      - run: sudo /opt/google-cloud-sdk/bin/gcloud config set project cp100-204508  
       - run: mkdir src
       - run: mkdir pkg
       - run: mkdir bin
@@ -47,4 +31,4 @@ dependencies:
       - run: go get google.golang.org/appengine 
       - run: go build main.go
       - run: gcloud -q app deploy app.yaml 
-      #- run:  
+#- run:  
