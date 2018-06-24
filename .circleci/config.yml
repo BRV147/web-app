@@ -18,7 +18,7 @@ jobs:
     ####   /go/src/github.com/circleci/go-tool
     ####   /go/src/bitbucket.org/circleci/go-tool
 
-    working_directory: /home/main/
+    working_directory: /home/main
     steps:
       - checkout
       
@@ -27,16 +27,15 @@ jobs:
       - run: 
         name: Store Service Account  
         command: echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
-      - run: |
-                sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-                sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-                sudo gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}     
+      - run: sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+      - run: sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      - run: sudo gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - run: mkdir src
       - run: mkdir pkg
       - run: mkdir bin
       - run: tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz 
       - run: export PATH=$PATH:/usr/local/go/bin
-      #- run:   
+      - run: sudo gcloud --quiet components update    
       - run: go get cloud.google.com/go/pubsub
       - run: go get -u google.golang.org/appengine 
       - run: gcloud app deploy
