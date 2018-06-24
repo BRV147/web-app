@@ -26,19 +26,17 @@ jobs:
       # specify any bash command here prefixed with `run: `
       - run: 
         name: Store Service Account  
-        command: echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
+        command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - run: |
                 sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
                 sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-                sudo gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}     
+                sudo gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+                sudo gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}}}}}}      
       - run: mkdir src
       - run: mkdir pkg
       - run: mkdir bin
-      - run: tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz 
-      - run: export PATH=$PATH:/usr/local/go/bin
-      #- run:   
       - run: go get cloud.google.com/go/pubsub
-      - run: go get -u google.golang.org/appengine 
-      - run: gcloud app deploy
-      - run: gcloud app browse
+      - run: go get google.golang.org/appengine 
+      - run: go run main.go
+      #- run: 
       #- run:                 
