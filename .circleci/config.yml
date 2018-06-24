@@ -24,7 +24,7 @@ jobs:
       
 
       # specify any bash command here prefixed with `run: `
-      - run: echo $GCLUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+      - run: echo $CLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
       - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run: gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
@@ -38,5 +38,5 @@ jobs:
       - run: go get cloud.google.com/go/pubsub
       - run: go get -u google.golang.org/appengine 
       - run: gcloud app deploy 
-      #- run: 
+      - run: gcloud app browse
       #- run:                 
