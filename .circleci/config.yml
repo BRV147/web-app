@@ -33,10 +33,12 @@ jobs:
       - run: mkdir bin
       - run: curl -O https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz
       - run: tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz  
-      - run: export PATH=$PATH:/usr/local/go/bin
+      - run: rm go1.10.3.linux-amd64.tar.gz
       - run: apt-get update && apt-get -y --only-upgrade install google-cloud-sdk-app-engine-grpc google-cloud-sdk-pubsub-emulator google-cloud-sdk-app-engine-go 
+      - run: export PATH=$PATH:/usr/local/go/bin
+      - run: export GPATH=/home/main  
       - run: go get cloud.google.com/go/pubsub
       - run: go get -u google.golang.org/appengine 
-      - run: gcloud app deploy
-      - run: gcloud app browse
+      - run: gcloud app deploy -y
+      #- run: 
       #- run:                 
