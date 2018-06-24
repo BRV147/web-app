@@ -31,7 +31,9 @@ jobs:
       - run: mkdir src
       - run: mkdir pkg
       - run: mkdir bin
-      - run: tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz 
+      - run: curl -O https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz
+      - run: tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz
+
       - run: export PATH=$PATH:/usr/local/go/bin
       - run: gcloud --quiet components update    
       - run: go get cloud.google.com/go/pubsub
