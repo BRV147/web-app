@@ -37,6 +37,6 @@ jobs:
       - run: apt-get update && apt-get -y --only-upgrade install google-cloud-sdk-app-engine-go 
       - run: go get cloud.google.com/go/pubsub
       - run: go get -u google.golang.org/appengine 
-      - run: gcloud app deploy --image-url=pushmessage.appspot.com 
+      - run: gcloud app deploy 
       - run: gcloud app browse
       #- run:                 
