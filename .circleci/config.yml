@@ -28,9 +28,9 @@ jobs:
       - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
       - run: gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run: gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-      - run: mkdir src
-      - run: mkdir pkg
-      - run: mkdir bin
+      - run: mkdir /home/main/src
+      - run: mkdir /home/main/pkg
+      - run: mkdir /home/main/bin
       - run: curl -O https://storage.googleapis.com/golang/go1.10.3.linux-amd64.tar.gz
       - run: tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz  
       - run: rm go1.10.3.linux-amd64.tar.gz
